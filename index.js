@@ -31,8 +31,8 @@ mongoose
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/auth", require("./routes/users"))
-app.use("/", require("./routes/reviewpage"))
+app.use("/auth", require("./routes/user-endpoints"))
+app.use("/", require("./routes/review-endpoints"))
 
 
 app.listen(process.env.PORT || 3000, () => {
