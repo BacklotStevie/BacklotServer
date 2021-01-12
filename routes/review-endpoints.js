@@ -3,6 +3,8 @@ const Review = require('../models/ReviewsSchema');
 const app = express();
 var jwt = require("jsonwebtoken");
 
+require('dotenv').config();
+
 app.get("/reviews", (req, res) => {
 
     Review.find()
@@ -46,13 +48,11 @@ app.delete("/reviews/:id", (req, res) => {
 });
 
 app.post("/writeReview", (req, res) => {
-    console.log("AUTHORIZATION HEADER", req.headers.authorization)
 
-    let token = req.headers.authorization
+    let token = req.headers.authorization.split(" ")[1]
     var decoded = jwt.verify(token, 'shhhh');
 
-    console.log("DECODED", decoded)
-    Review.create(req.body)
+    Review.create(req.body.combined)
         .then((insertedReview) => {
             res.send("review inserted")
         })
