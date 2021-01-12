@@ -25,20 +25,20 @@ app.post("/signup", (req, res) => {
                     password: req.body.password
                 }).then((user) => {
                     var token = jwt.sign({ id: user._id }, 'shhhh')
-                    res.status(200).json({ 
-                        token, 
+                    res.status(200).json({
+                        token,
                         user: {
                             email: user.email,
                             userType: user.userType
-                        } 
+                        }
                     })
                 })
             }
-        })   
+        })
         .catch((err) => {
             res.status(500).send("error")
         })
-        
+
 })
 
 app.post("/login", (req, res) => {
@@ -47,14 +47,14 @@ app.post("/login", (req, res) => {
             if (!user) res.status(403).send("Invalid credentials");
             else if (user.password === req.body.password) {
                 var token = jwt.sign({ id: user._id }, 'shhhh')
-                res.status(200).json({ 
-                    token, 
+                res.status(200).json({
+                    token,
                     user: {
                         email: user.email,
                         userType: user.userType
-                    } 
+                    }
                 })
-                
+                console.log(token)
             }
             else {
                 res.status(403).send("Invalid credentials");

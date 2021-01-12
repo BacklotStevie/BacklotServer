@@ -34,6 +34,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/auth", require("./routes/user-endpoints"))
 app.use("/", require("./routes/review-endpoints"))
 
+app.post("/writeReview", (req, res) => {
+    console.log("AUTHORIZATION HEADER", req.headers.authorization)
+
+    let token = req.headers.authorization
+    var decoded = jwt.verify(token, 'shhhh');
+
+    console.log("DECODED", decoded)
+    Review.create(req.body)
+        .then((insertedReview) => {
+            res.send("review inserted")
+        })
+        .catch((err) => {
+            res.status(500).send("Oops!")
+        })
+});
 
 app.listen(process.env.PORT || 3000, () => {
     console.log("running")
